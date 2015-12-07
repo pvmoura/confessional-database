@@ -1,0 +1,9 @@
+extends layout
+
+block content
+  h1= title
+
+  form(name="edit-question", method="post")
+  select
+    for question in questions
+        option(value=question) #{question}

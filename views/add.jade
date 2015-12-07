@@ -1,0 +1,51 @@
+extends layout
+
+block content
+  h1= title
+  form(name="add-question", method="post")
+        div.input
+            span.label Filename 
+            input(type="text", name="filename") 
+            br
+            br
+        div.input
+            span.label Question Text 
+            br
+            textarea(name="questionText", cols="40", rows="5")
+        div.input
+            span.label Follow-up Type 
+            select(name="followuptype" id = "followuptype" onchange="output();")
+                for type in types
+                    option(value=type) #{type}
+        div.input
+            span.label Follow-up Filename (first field: SHORT/YES, second field: LONG/NO) 
+            input(type="text", name="fufile1", id="fufile1")
+            input(type="text", name="fufile2", id="fufile2")
+        div.input
+            span.label Tags 
+            select(name="tag1")
+                    for tag in tags
+                        option(value=tag) #{tag}
+                        - console.log('added')
+            select(name="tag2")
+                    for tag in tags
+                        option(value=tag) #{tag}
+            select(name="tag3")
+                    for tag in tags
+                        option(value=tag) #{tag}
+        div.input
+            span.label Key Words 
+            br
+            each val in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+                input(type="text" name="keyword" + val, class="keyword")
+                br
+
+        div.actions
+            input(type="submit", value="add")
+        script(type="text/javascript").
+            function output () {
+                var fu = document.getElementById("followuptype").value;
+                if (fu === "length") {
+                    console.log("Length");
+                }
+            }
