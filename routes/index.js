@@ -10,7 +10,7 @@ router.get('/', function(req, res, next) {
 
 router.get('/edit', function(req, res, next) {
 	var questions = [];
-	var reader = csv.createCsvFileReader('questions.csv');
+	var reader = csv.createCsvFileReader('public/questions.csv');
 	console.log(reader.length);
 	reader.addListener('data', function(data) {
     	questions.push(data[0]);
@@ -56,7 +56,7 @@ router.post('/add', function(req, res, next) {
 	var toSave = [questionText, filename, futype, fufile1, fufile2, tag1, tag2, tag3, keyword1, keyword2, keyword3, keyword4, keyword5, keyword6, keyword7, keyword8, keyword9, keyword10];
 
 	console.log(toSave);
-	var writer = csv.createCsvStreamWriter(fs.createWriteStream('test.csv', {'flags': 'a'}));  
+	var writer = csv.createCsvStreamWriter(fs.createWriteStream('public/questions.csv', {'flags': 'a'}));  
 	writer.writeRecord(toSave);
 	res.redirect('/');
 });
