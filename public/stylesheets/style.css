@@ -1,8 +1,17 @@
 body {
   padding: 50px;
   font: 14px Helvetica, Arial, sans-serif;
+  line-height: 175%;
 }
 
 a {
   color: #00B7FF;
+}
+
+#chosenQuestion {
+	width: 90% !important;
+}
+
+.label,	 .Label {
+	font-weight: bold;
 }

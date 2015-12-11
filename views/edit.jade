@@ -4,6 +4,88 @@ block content
   h1= title
 
   form(name="edit-question", method="post")
-  select
-    for question in questions
-        option(value=question) #{question}
+    div.input
+        span.Label Select a question.
+        br
+        select(name="chosenQuestion", id = "chosenQuestion", onchange="output();")
+          option(value='')
+          for t in text
+              option(value=t) #{t}
+    br
+    br
+    div.input(class="toHide")
+        span.Label Filename 
+        input(type="text" name="filename" id="filename")
+        br
+    div.input(class="toHide")
+        span.label Follow-up Type
+        select(name="futype" id="futype")
+              option(value="") 
+              option(value="hardfollow") hardfollow
+              option(value="yesno") yesno
+              option(value="length") length
+        br
+    div.input(class="toHide")
+        span.Label Follow-Up Files 
+        input(type="text" name="fufile1" id="fufile1")
+        input(type="text" name="fufile2" id="fufile2")
+        br
+    div.input(class="toHide")
+        span.label Tags 
+            select(name="tag1", id="tag1")
+                    for tag in tags
+                        option(value=tag) #{tag}
+                        - console.log('added')
+            select(name="tag2", id="tag2")
+                    for tag in tags
+                        option(value=tag) #{tag}
+            select(name="tag3", id="tag3")
+                    for tag in tags
+                        option(value=tag) #{tag}
+        br
+    div.input(class="toHide")
+        span.Label Keywords
+        br
+        each val in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+          input(type="text" name="keyword" + val, id="keyword" + val, class="keyword")
+        br
+    div.actions(class="toHide")
+        input(type="submit", value="save")
+  br
+  a(href="/") Home
+  script.
+    function output () {
+        $(".toHide").show();
+        var allQuestions = !{JSON.stringify(questions)};
+        console.log(allQuestions.length);
+        var cq = document.getElementById("chosenQuestion").value;
+        for (var i = 0; i < allQuestions.length; i++) {
+            if (cq === allQuestions[i][0]) {
+                console.log(allQuestions[i][1]);
+                document.getElementById("filename").value = allQuestions[i][1];
+                document.getElementById("futype").value = allQuestions[i][2];
+                document.getElementById("fufile1").value = allQuestions[i][3];
+                document.getElementById("fufile2").value = allQuestions[i][4];
+
+                for (var j = 5; j < 8; j++) {
+                    var currentcol = j - 4;
+                    var t = "tag" + currentcol;
+                    if (allQuestions[i].length <= j) {
+                        document.getElementById(t).value = "";
+                    } else {
+                        document.getElementById(t).value = allQuestions[i][j];
+                    }
+                }
+
+                for (var j = 8; j < 28; j++) {
+                    var currentcol = j-7;
+                    var kw = "keyword" + currentcol;
+                    if (allQuestions[i].length <= j) {
+                    	document.getElementById(kw).value = "";
+                    } else {
+                    	document.getElementById(kw).value = allQuestions[i][j];
+                    }
+                }
+            }
+        }
+    }

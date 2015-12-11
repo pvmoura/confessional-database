@@ -18,7 +18,7 @@ block content
                 for type in types
                     option(value=type) #{type}
         div.input
-            span.label Follow-up Filename (first field: SHORT/YES, second field: LONG/NO) 
+            span.label Follow-up Filename (first field: HARD FOLLOW/SHORT/YES, second field: LONG/NO) 
             input(type="text", name="fufile1", id="fufile1")
             input(type="text", name="fufile2", id="fufile2")
         div.input
@@ -36,12 +36,14 @@ block content
         div.input
             span.label Key Words 
             br
-            each val in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+            each val in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
                 input(type="text" name="keyword" + val, class="keyword")
-                br
+        br
 
         div.actions
             input(type="submit", value="add")
+  br
+  a(href="/") Home
         script(type="text/javascript").
             function output () {
                 var fu = document.getElementById("followuptype").value;
