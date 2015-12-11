@@ -121,7 +121,7 @@ router.post('/add', function(req, res, next) {
 	var keyword19 = req.body.keyword19;
 	var keyword20 = req.body.keyword20;
 
-	var toSave = [chosenQuestion, filename, futype, fufile1, fufile2, tag1, tag2, tag3, keyword1, keyword2, keyword3, keyword4, keyword5, keyword6, keyword7, keyword8, keyword9, keyword10, keyword11, keyword12, keyword13, keyword14, keyword15, keyword16, keyword17, keyword18, keyword19, keyword20];
+	var toSave = [questionText, filename, futype, fufile1, fufile2, tag1, tag2, tag3, keyword1, keyword2, keyword3, keyword4, keyword5, keyword6, keyword7, keyword8, keyword9, keyword10, keyword11, keyword12, keyword13, keyword14, keyword15, keyword16, keyword17, keyword18, keyword19, keyword20];
 
 	console.log(toSave);
 	var writer = csv.createCsvStreamWriter(fs.createWriteStream('public/questions.csv', {'flags': 'a'}));  
