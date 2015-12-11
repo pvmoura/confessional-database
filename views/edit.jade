@@ -14,6 +14,10 @@ block content
     br
     br
     div.input(class="toHide")
+        span.Label Current question text:
+        br
+        input(type="text" name="currentText" id="currentText")
+    div.input(class="toHide")
         span.Label Filename 
         input(type="text" name="filename" id="filename")
         br
@@ -62,6 +66,7 @@ block content
         for (var i = 0; i < allQuestions.length; i++) {
             if (cq === allQuestions[i][0]) {
                 console.log(allQuestions[i][1]);
+                document.getElementById("currentText").value = allQuestions[i][0];
                 document.getElementById("filename").value = allQuestions[i][1];
                 document.getElementById("futype").value = allQuestions[i][2];
                 document.getElementById("fufile1").value = allQuestions[i][3];

@@ -34,6 +34,7 @@ router.get('/edit', function(req, res, next) {
 router.post('/edit', function(req, res, next) {
 	console.log(questions.length);
 	var chosenQuestion = (req.body.chosenQuestion);
+	var newText = req.body.currentText;
 	var filename = req.body.filename;
 	var futype = req.body.followuptype;
 	var fufile1 = req.body.fufile1;
@@ -73,6 +74,7 @@ router.post('/edit', function(req, res, next) {
 		var oldQuestion = questions[i][0];
 
 		if (oldQuestion === toSave[0]) {
+			toSave[0] = newText;
 			questions[i] = toSave;
 			console.log("replaced!");
 			console.log(questions[i]);
