@@ -33,7 +33,7 @@ router.get('/edit', function(req, res, next) {
 
 router.post('/edit', function(req, res, next) {
 	console.log(questions.length);
-	var chosenQuestion = (req.body.chosenQuestion);
+	var chosenQuestion = (req.body.oldText);
 	var newText = req.body.currentText.replace(/,/g, "");
 	var filename = req.body.filename;
 	var futype = req.body.followuptype;
