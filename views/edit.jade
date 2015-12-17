@@ -64,7 +64,7 @@ block content
         console.log(allQuestions.length);
         var cq = document.getElementById("chosenQuestion").value;
         for (var i = 0; i < allQuestions.length; i++) {
-            if (cq === allQuestions[i][0]) {
+            if (cq === allQuestions[i][1]) {
                 console.log(allQuestions[i][1]);
                 document.getElementById("currentText").value = allQuestions[i][0];
                 document.getElementById("filename").value = allQuestions[i][1];

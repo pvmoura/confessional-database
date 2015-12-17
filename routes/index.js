@@ -23,9 +23,9 @@ router.get('/edit', function(req, res, next) {
 		console.log("printed");
 		var tags = ['', 'staller', 'followup', 'escapehatch', 'booth1', 'booth2', 'booth3', 'notfirst', 'belief', 'childhood', 'hurt', 'love', 'secret', 'sex', 'worry', 'wrong', 'warmup', 'gettingwarmer', 'aboutyou'];
 		for (var i = 1; i < questions.length; i++) {
-			text.push(questions[i][0]);
+			text.push(questions[i][1]);
 		}
-
+		text.sort();
 		res.render('edit', { title: 'Edit Question', tags:tags, text:text, questions:questions });
 	});
 	// console.log(questions);
