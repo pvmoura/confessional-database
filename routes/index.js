@@ -135,10 +135,18 @@ router.get('/delete', function(req, res, next) {
 	var text = [];
 	var tags = [];
 	questions = [];
+	deletedQuestions = [];
 	var reader = csv.createCsvFileReader('public/questions.csv');
+	var dreader = csv.createCsvFileReader('public/deleted-questions.csv');
+
 	console.log(reader.parsingStatus);
 	reader.addListener('data', function(data) {
 		questions.push(data);
+	});
+
+	console.log(dreader.parsingStatus);
+	dreader.addListener('data', function(data) {
+		deletedQuestions.push(data);
 	});
 
 	reader.addListener('end', function() {
@@ -168,7 +176,7 @@ router.post('/delete', function(req, res, next) {
 
 		if (oldQuestion === toDelete) {
 			console.log(questions[i]);
-			deleted.writeRecord(questions[i]);
+			deletedQuestions.push(questions[i]);
 			questions.splice(i, 1);
 			console.log("question deleted");
 		} 
@@ -179,6 +187,11 @@ router.post('/delete', function(req, res, next) {
 	for (var i = 0; i < questions.length; i++) {
 		writer.writeRecord(questions[i]);
 	}
+
+	for (var i = 0; i < deletedQuestions.length; i++) {
+		deleted.writeRecord(deletedQuestions[i]);
+	}
+	
 
 	res.redirect('/');
 
