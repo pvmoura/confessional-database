@@ -3,7 +3,7 @@ extends layout
 block content
   h1= title
 
-  form(name="edit-question", method="post")
+  form(name="delete-question", method="post")
     div.input
         span.Label Select a question.
         br
@@ -56,10 +56,9 @@ block content
           input(type="text" name="keyword" + val, id="keyword" + val, class="keyword")
         br
     div.actions(class="toHide")
-        input(type="submit", value="save")
+        input(type="submit", value="delete")
   br
   a(href="/") Home
-
   script.
     var questionIndex = localStorage.getItem("index");
     console.log(questionIndex);

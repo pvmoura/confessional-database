@@ -1,0 +1,28 @@
+extends layout
+
+block content
+  div
+    a(href="/") Home
+    br
+    br
+    table(border="1" id="questionGrid")
+      thead
+        tr(width="100")
+          for h in header
+            th #{h}
+          
+      tbody
+        for q in questions
+          tr
+            td
+              <a href="/edit"><button onclick="collectData(this)">Edit</button></a>
+            td
+              <a href="/delete"><button onclick="collectData(this)">Delete</button></a>
+            each item in q
+              td
+                p #{item}
+  script.
+    function collectData(x) {
+      var questionIndex = x.parentNode.parentNode.parentNode.rowIndex;
+      localStorage.setItem("index",questionIndex);
+    }

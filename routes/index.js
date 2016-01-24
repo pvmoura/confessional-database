@@ -131,4 +131,78 @@ router.post('/add', function(req, res, next) {
 	res.redirect('/');
 });
 
+router.get('/delete', function(req, res, next) {
+	var text = [];
+	var tags = [];
+	questions = [];
+	var reader = csv.createCsvFileReader('public/questions.csv');
+	console.log(reader.parsingStatus);
+	reader.addListener('data', function(data) {
+		questions.push(data);
+	});
+
+	reader.addListener('end', function() {
+		console.log("printed");
+		var tags = ['', 'staller', 'followup', 'escapehatch', 'booth1', 'booth2', 'booth3', 'notfirst', 'belief', 'childhood', 'hurt', 'love', 'secret', 'sex', 'worry', 'wrong', 'warmup', 'gettingwarmer', 'aboutyou'];
+		for (var i = 1; i < questions.length; i++) {
+			text.push(questions[i][1]);
+		}
+		text.sort();
+		res.render('delete', { title: 'Delete Question', tags:tags, text:text, questions:questions });
+	});
+	// console.log(questions);
+});
+
+router.post('/delete', function(req, res, next) {
+	console.log(questions.length);
+	var toDelete = (req.body.chosenQuestion);
+
+	console.log(toDelete);
+
+	// var reader = csv.createCsvFileReader('public/test.csv');
+	var deleted = csv.createCsvStreamWriter(fs.createWriteStream('public/deleted-questions.csv'));
+	var writer = csv.createCsvStreamWriter(fs.createWriteStream('public/questions.csv'));
+
+	for (var i = 0; i < questions.length; i++) {
+		var oldQuestion = questions[i][1];
+
+		if (oldQuestion === toDelete) {
+			console.log(questions[i]);
+			deleted.writeRecord(questions[i]);
+			questions.splice(i, 1);
+			console.log("question deleted");
+		} 
+	}
+
+	console.log("number of questions: " + questions.length);
+
+	for (var i = 0; i < questions.length; i++) {
+		writer.writeRecord(questions[i]);
+	}
+
+	res.redirect('/');
+
+});
+
+router.get('/grid', function(req, res, next) {
+	questions = [];
+	var header = ["", ""];
+	var reader = csv.createCsvFileReader('public/questions.csv');
+	console.log(reader.parsingStatus);
+	reader.addListener('data', function(data) {
+		questions.push(data);
+	});
+
+	reader.addListener('end', function() {
+		for (var i = 0; i < questions[0].length; i++) {
+			header.push(questions[0][i]);
+		}
+		questions.splice(0, 1);
+		console.log(questions.length);
+		console.log("printed");
+		res.render('grid', { title: 'Question Grid', questions:questions, header:header });
+	});
+	// console.log(questions);
+});
+
 module.exports = router;
