@@ -25,3 +25,12 @@ td {
 	width: 200px;
 	/*white-space: nowrap*/
 }
+
+button {
+	padding: 5px;
+	margin: 5px;
+}
+
+#searchText {
+	line-height: 20px;
+}
