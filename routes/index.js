@@ -4,6 +4,7 @@ var csv = require('ya-csv'),
     fs = require('fs');
 
 var questions = [];
+var deletedquestions = [];
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Pop-Up Confessional' });
@@ -88,9 +89,19 @@ router.post('/edit', function(req, res, next) {
 });
 
 router.get('/add', function(req, res, next) {
-  var tags = ['', 'staller', 'followup', 'escapehatch', 'booth1', 'booth2', 'booth3', 'notfirst', 'belief', 'childhood', 'hurt', 'love', 'secret', 'sex', 'worry', 'wrong', 'warmup', 'gettingwarmer', 'aboutyou'];
-  var types = ['', 'hardfollow', 'length', 'yesno'];
-  res.render('add', { title: 'Add Question', tags:tags, types:types });
+  deletedquestions = [];
+
+  var reader = csv.createCsvFileReader('public/deleted-questions.csv');
+	console.log(reader.parsingStatus);
+	reader.addListener('data', function(data) {
+		deletedquestions.push(data);
+  });
+
+  reader.addListener('end', function() {
+	  var tags = ['', 'staller', 'followup', 'escapehatch', 'booth1', 'booth2', 'booth3', 'notfirst', 'belief', 'childhood', 'hurt', 'love', 'secret', 'sex', 'worry', 'wrong', 'warmup', 'gettingwarmer', 'aboutyou'];
+	  var types = ['', 'hardfollow', 'length', 'yesno'];
+	  res.render('add', { title: 'Add Question', tags:tags, types:types, questions:deletedquestions });
+	});
 });
 
 router.post('/add', function(req, res, next) {
@@ -126,8 +137,17 @@ router.post('/add', function(req, res, next) {
 	var toSave = [questionText, filename, futype, fufile1, fufile2, tag1, tag2, tag3, keyword1, keyword2, keyword3, keyword4, keyword5, keyword6, keyword7, keyword8, keyword9, keyword10, keyword11, keyword12, keyword13, keyword14, keyword15, keyword16, keyword17, keyword18, keyword19, keyword20];
 
 	console.log(toSave);
-	var writer = csv.createCsvStreamWriter(fs.createWriteStream('public/questions.csv', {'flags': 'a'}));  
+	var writer = csv.createCsvStreamWriter(fs.createWriteStream('public/questions.csv', {'flags': 'a'}));
+	var dwriter = csv.createCsvStreamWriter(fs.createWriteStream('public/deleted-questions.csv'));
 	writer.writeRecord(toSave);
+
+	for (var i = 0; i < deletedquestions.length; i++) {
+		if (toSave[0] === deletedquestions[i][0]) {
+			deletedquestions.splice(i, 1);
+		}
+		console.log(deletedquestions[i]);
+		dwriter.writeRecord(deletedquestions[i]);
+	}
 	res.redirect('/');
 });
 
@@ -214,6 +234,27 @@ router.get('/grid', function(req, res, next) {
 		console.log(questions.length);
 		console.log("printed");
 		res.render('grid', { title: 'Question Grid', questions:questions, header:header });
+	});
+	// console.log(questions);
+});
+
+router.get('/oldquestions', function(req, res, next) {
+	deletedquestions = [];
+	var header = [""];
+	var reader = csv.createCsvFileReader('public/deleted-questions.csv');
+	console.log(reader.parsingStatus);
+	reader.addListener('data', function(data) {
+		deletedquestions.push(data);
+	});
+
+	reader.addListener('end', function() {
+		for (var i = 0; i < deletedquestions[0].length; i++) {
+			header.push(deletedquestions[0][i]);
+		}
+		deletedquestions.splice(0, 1);
+		console.log(deletedquestions.length);
+		console.log("printed");
+		res.render('oldquestions', { title: 'Deleted Questions', questions:deletedquestions, header:header });
 	});
 	// console.log(questions);
 });

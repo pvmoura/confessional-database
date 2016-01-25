@@ -5,13 +5,13 @@ block content
   form(name="add-question", method="post")
         div.input
             span.label Filename 
-            input(type="text", name="filename") 
+            input(type="text", id="af", name="filename") 
             br
             br
         div.input
             span.label Question Text 
             br
-            textarea(name="questionText", cols="40", rows="5")
+            textarea(name="questionText", id="aq", cols="40", rows="5")
         div.input
             span.label Follow-up Type 
             select(name="followuptype" id = "followuptype" onchange="output();")
@@ -23,21 +23,21 @@ block content
             input(type="text", name="fufile2", id="fufile2")
         div.input
             span.label Tags 
-            select(name="tag1")
+            select(name="tag1" id="t1")
                     for tag in tags
                         option(value=tag) #{tag}
                         - console.log('added')
-            select(name="tag2")
+            select(name="tag2" id="t2")
                     for tag in tags
                         option(value=tag) #{tag}
-            select(name="tag3")
+            select(name="tag3" id="t3")
                     for tag in tags
                         option(value=tag) #{tag}
         div.input
             span.label Key Words 
             br
             each val in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
-                input(type="text" name="keyword" + val, class="keyword")
+                input(type="text" name="keyword" + val, id="keyword" + val, class="keyword")
         br
 
         div.actions
@@ -51,3 +51,41 @@ block content
                     console.log("Length");
                 }
             }
+  script.
+    var questionIndex = localStorage.getItem("index");
+    console.log(questionIndex);
+
+    if (questionIndex != null) {
+      var allQuestions = !{JSON.stringify(questions)};
+      var qi = questionIndex;
+      var currentQuestion = allQuestions[qi];
+      console.log(currentQuestion);
+      $(".toHide").show();
+
+      document.getElementById("aq").value = currentQuestion[0];
+      document.getElementById("af").value = currentQuestion[1];
+      document.getElementById("followuptype").value = currentQuestion[2];
+      document.getElementById("fufile1").value = currentQuestion[3];
+      document.getElementById("fufile2").value = currentQuestion[4];
+
+      for (var j = 5; j < 8; j++) {
+        var currentcol = j - 4;
+        var t = "t" + currentcol;
+        console.log(t);
+            if (currentQuestion.length <= j) {
+                document.getElementById(t).value = "";
+            } else {
+                document.getElementById(t).value = currentQuestion[j];
+            }
+        }
+
+        for (var j = 8; j < 28; j++) {
+            var currentcol = j-7;
+            var kw = "keyword" + currentcol;
+            if (currentQuestion.length <= j) {
+                document.getElementById(kw).value = "";
+            } else {
+                document.getElementById(kw).value = currentQuestion[j];
+            }
+        }
+    }

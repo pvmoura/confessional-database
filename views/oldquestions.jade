@@ -1,0 +1,59 @@
+extends layout
+
+block content
+  input(id="deletedText" size="50")
+  button(name="search" value="Search" onclick="filterSearch()") Search
+  button(name="clear" value="clear" onclick="clearSearch()") Clear Search
+  br
+  br
+  a(href="/") Home
+  div
+    br
+    br
+    table(border="1" id="deletedquestionGrid")
+      thead
+        tr(width="100")
+          for h in header
+            th #{h}
+          
+      tbody
+        for q in questions
+          tr(class="grid")
+            td
+              <a href="/add"><button onclick="collectData(this)">Add Back</button></a>
+            each item in q
+              td
+                p #{item}
+  script.
+    function collectData(x) {
+      var questionIndex = x.parentNode.parentNode.parentNode.rowIndex;
+      localStorage.setItem("index",questionIndex);
+    }
+
+    function filterSearch() {
+      var searchTerm = document.getElementById("deletedText").value;
+      var allEntries = document.querySelectorAll(".grid");
+      console.log(allEntries[0].childNodes[2].innerText);
+
+      for (var i = 0; i < allEntries.length; i++) {
+        for (var j = 0; j < allEntries[i].childNodes.length; j++) {
+        var textToSearch = allEntries[i].childNodes[j].innerText;
+          if (textToSearch.indexOf(searchTerm) != -1) {
+            console.log(textToSearch);
+            allEntries[i].style.display = '';
+            break;
+          } else {
+            allEntries[i].style.display = 'none';
+          }
+        }
+      }
+    }
+
+    function clearSearch() {
+      document.getElementById("deletedText").value = '';
+      var allEntries = document.querySelectorAll(".grid");
+
+      for (var i = 0; i < allEntries.length; i++) {
+        allEntries[i].style.display = '';
+      }
+    }
