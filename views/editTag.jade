@@ -1,0 +1,14 @@
+extends layout
+
+block content
+  h1= title
+
+  form(name="edit-tag", method="post")
+    div.input()
+        span.Label Tag 
+        input(type="text" name="formTag" id="tag" value=tag)
+        br
+    div.actions()
+        input(type="submit", value="save")
+  br
+  a(href="/") Home

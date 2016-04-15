@@ -10,9 +10,99 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Pop-Up Confessional' });
 });
 
-router.get('/edit', function(req, res, next) {
+router.get('/editTags', function(req, res, next) {
 	var text = [];
 	var tags = [];
+	var reader = csv.createCsvFileReader('public/tags.csv');
+	console.log(reader.parsingStatus);
+	reader.addListener('data', function(data) {
+		tags.push(data);
+	});
+
+});
+
+router.get('/viewTags', function(req, res, next) {
+	var questions = [];
+	var reader = csv.createCsvFileReader('public/questions.csv');
+	console.log(reader.parsingStatus);
+	reader.addListener('data', function(data) {
+		questions.push(data);
+	});
+
+	reader.on('end', function (data) {
+		var tags = [], tag;
+		for (var i = 1; i < questions.length; i++) {
+			for (var j = 5; j < 8; j++) {
+				tag = questions[i][j];
+				if (tag && tags.indexOf(tag) === -1)
+					tags.push(tag);
+			}
+		}
+		res.render('allTags', { tags: tags });
+	});
+});
+
+router.get('/editTag/:tag', function(req,res,next) {
+	res.render('editTag', {tag: req.params.tag, title: "Edit Tag"});
+});
+
+router.post('/editTag/:tag', function(req, res, next) {
+	var reader = csv.createCsvFileReader('public/questions.csv');
+	console.log(reader.parsingStatus);
+	reader.addListener('data', function(data) {
+		questions.push(data);
+	});
+	reader.on('end', function (data) {
+		var tags = [];
+		var writer = csv.createCsvStreamWriter(fs.createWriteStream('public/questions.csv'));
+		for (var i = 0; i < questions.length; i++) {
+			
+			for (var j = 5; j < 8; j++) {
+				if (req.params.tag === questions[i][j]) {
+					questions[i][j] = req.body.formTag;
+				}
+			}
+			writer.writeRecord(questions[i]);
+		}
+		// res.send(questions[i-1].join('<br />'));
+		// res.redirect('/grid');
+		res.send(questions.map(function(elem) {
+			return elem.join(' ');
+		}).join('<br />'));
+	});
+});
+
+router.get('/deleteTag/:tag', function(req, res, next) {
+	var questions = [];
+	var reader = csv.createCsvFileReader('public/questions.csv');
+	console.log(reader.parsingStatus);
+	reader.addListener('data', function(data) {
+		questions.push(data);
+	});
+
+	reader.on('end', function (data) {
+		var tags = [];
+		var writer = csv.createCsvStreamWriter(fs.createWriteStream('public/questions.csv'));
+		for (var i = 0; i < questions.length; i++) {
+			for (var j = 5; j < 8; j++) {
+				if (req.params.tag === questions[i][j]) {
+					questions[i][j] = '';
+				}
+			}
+			writer.writeRecord(questions[i]);
+		}
+		// res.send(questions[i-1].join('<br />'));
+		// res.redirect('/grid');
+		res.send(questions.map(function(elem) {
+			return elem.join(' ');
+		}).join('<br />'));
+	});
+});
+
+
+
+router.get('/edit', function(req, res, next) {
+	var text = [];
 	questions = [];
 	var reader = csv.createCsvFileReader('public/questions.csv');
 	console.log(reader.parsingStatus);
@@ -21,8 +111,17 @@ router.get('/edit', function(req, res, next) {
 	});
 
 	reader.addListener('end', function() {
-		console.log("printed");
-		var tags = ['', 'staller', 'followup', 'escapehatch', 'booth1', 'booth2', 'booth3', 'notfirst', 'belief', 'childhood', 'hurt', 'love', 'secret', 'sex', 'worry', 'wrong', 'warmup', 'gettingwarmer', 'aboutyou'];
+		var tags = [''], tag;
+		for (var i = 1; i < questions.length; i++) {
+			for (var j = 5; j < 8; j++) {
+				tag = questions[i][j];
+				if (tag && tags.indexOf(tag) === -1)
+					tags.push(tag);
+			}
+		};
+		//res.send(tags.join('<br />'));
+		console.log(tags);
+		// var tags = ['', 'staller', 'followup', 'escapehatch', 'booth1', 'booth2', 'booth3', 'notfirst', 'belief', 'childhood', 'hurt', 'love', 'secret', 'sex', 'worry', 'wrong', 'warmup', 'gettingwarmer', 'aboutyou'];
 		for (var i = 1; i < questions.length; i++) {
 			text.push(questions[i][1]);
 		}
@@ -79,9 +178,10 @@ router.post('/edit', function(req, res, next) {
 			questions[i] = toSave;
 			console.log("replaced!");
 			console.log(questions[i]);
-		}
 
+		}
 		writer.writeRecord(questions[i]);
+
 	}
 
 	res.redirect('/');
@@ -98,7 +198,15 @@ router.get('/add', function(req, res, next) {
   });
 
   reader.addListener('end', function() {
-	  var tags = ['', 'staller', 'followup', 'escapehatch', 'booth1', 'booth2', 'booth3', 'notfirst', 'belief', 'childhood', 'hurt', 'love', 'secret', 'sex', 'worry', 'wrong', 'warmup', 'gettingwarmer', 'aboutyou'];
+		var tags = [], tag;
+	for (var i = 1; i < questions.length; i++) {
+		for (var j = 5; j < 8; j++) {
+			tag = questions[i][j];
+			if (tag && tags.indexOf(tag) === -1)
+				tags.push(tag);
+		}
+	};
+	  // var tags = ['', 'staller', 'followup', 'escapehatch', 'booth1', 'booth2', 'booth3', 'notfirst', 'belief', 'childhood', 'hurt', 'love', 'secret', 'sex', 'worry', 'wrong', 'warmup', 'gettingwarmer', 'aboutyou'];
 	  var types = ['', 'hardfollow', 'length', 'yesno'];
 	  res.render('add', { title: 'Add Question', tags:tags, types:types, questions:deletedquestions });
 	});

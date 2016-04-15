@@ -22,17 +22,11 @@ block content
             input(type="text", name="fufile1", id="fufile1")
             input(type="text", name="fufile2", id="fufile2")
         div.input
-            span.label Tags 
-            select(name="tag1" id="t1")
-                    for tag in tags
-                        option(value=tag) #{tag}
-                        - console.log('added')
-            select(name="tag2" id="t2")
-                    for tag in tags
-                        option(value=tag) #{tag}
-            select(name="tag3" id="t3")
-                    for tag in tags
-                        option(value=tag) #{tag}
+            span.label Tags
+                input(type="text" name="tag1" id="tag1")
+                input(type="text" name="tag2" id="tag2")
+                input(type="text" name="tag3" id="tag3")
+            br
         div.input
             span.label Key Words 
             br

@@ -2,7 +2,9 @@ extends layout
 
 block content
   h1= title
-
+  div
+    for tag in tags
+      div #{tag}
   form(name="edit-question", method="post")
     div.input
         span.Label Select a question.
@@ -37,17 +39,10 @@ block content
         input(type="text" name="fufile2" id="fufile2")
         br
     div.input(class="toHide")
-        span.label Tags 
-            select(name="tag1", id="tag1")
-                    for tag in tags
-                        option(value=tag) #{tag}
-                        - console.log('added')
-            select(name="tag2", id="tag2")
-                    for tag in tags
-                        option(value=tag) #{tag}
-            select(name="tag3", id="tag3")
-                    for tag in tags
-                        option(value=tag) #{tag}
+        span.label Tags
+            input(type="text" name="tag1" id="tag1")
+            input(type="text" name="tag2" id="tag2")
+            input(type="text" name="tag3" id="tag3")
         br
     div.input(class="toHide")
         span.Label Keywords
