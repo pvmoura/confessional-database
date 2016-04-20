@@ -10,17 +10,6 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Pop-Up Confessional' });
 });
 
-router.get('/editTags', function(req, res, next) {
-	var text = [];
-	var tags = [];
-	var reader = csv.createCsvFileReader('public/tags.csv');
-	console.log(reader.parsingStatus);
-	reader.addListener('data', function(data) {
-		tags.push(data);
-	});
-
-});
-
 router.get('/viewTags', function(req, res, next) {
 	var questions = [];
 	var reader = csv.createCsvFileReader('public/questions.csv');
@@ -189,16 +178,15 @@ router.post('/edit', function(req, res, next) {
 });
 
 router.get('/add', function(req, res, next) {
-  deletedquestions = [];
+  var deletedquestions = [], questions = [];
 
   var reader = csv.createCsvFileReader('public/deleted-questions.csv');
-	console.log(reader.parsingStatus);
-	reader.addListener('data', function(data) {
-		deletedquestions.push(data);
+  var questionReader = csv.createCsvFileReader('public/questions.csv');
+  questionReader.on('data', function (data) {
+  	questions.push(data);
   });
-
-  reader.addListener('end', function() {
-		var tags = [], tag;
+  questionReader.on('end', function () {
+  			var tags = [''], tag;
 	for (var i = 1; i < questions.length; i++) {
 		for (var j = 5; j < 8; j++) {
 			tag = questions[i][j];
@@ -206,10 +194,16 @@ router.get('/add', function(req, res, next) {
 				tags.push(tag);
 		}
 	};
+	console.log(tags);
 	  // var tags = ['', 'staller', 'followup', 'escapehatch', 'booth1', 'booth2', 'booth3', 'notfirst', 'belief', 'childhood', 'hurt', 'love', 'secret', 'sex', 'worry', 'wrong', 'warmup', 'gettingwarmer', 'aboutyou'];
 	  var types = ['', 'hardfollow', 'length', 'yesno'];
-	  res.render('add', { title: 'Add Question', tags:tags, types:types, questions:deletedquestions });
-	});
+	  res.render('add', { title: 'Add Question', tags:tags, types:types, deletedquestions:deletedquestions, questions: questions });
+  })
+	console.log(reader.parsingStatus);
+	reader.addListener('data', function(data) {
+		deletedquestions.push(data);
+  });
+
 });
 
 router.post('/add', function(req, res, next) {

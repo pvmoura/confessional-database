@@ -11,7 +11,7 @@
 "Tell me about your outfit. I'm into it.","OUTFIT1a_T01","","OUTFIT1b_T02_BEST","","warmup","","","","","","","","","","","","","","","","","","","","","",""
 "How has your fashion sense or personal style changed throughout your life?","OUTFIT1b_T02_BEST","","","","warmup","followup","","","","","","","","","","","","","","","","","","","","",""
 "What kind of compliments have you gotten from people recently? What do people notice about you?","COMPLIMENTS1a_T02_BEST","","COMPLIMENTS1b_T02_BEST","","warmup","","","","","","","","","","","","","","","","","","","","","",""
-"Do people tell you that you remind them of somebody? Maybe celebrity do you get that a lot?","COMPLIMENTS1b_T02_BEST","","","","followup","","","","","","","","","","","","","","","","","","","","","",""
+"Do people tell you that you remind them of somebody? Maybe celebrity do you get that a lot?","COMPLIMENTS1b_T02_BEST","yesno","","","followup","","","","","","","","","","","","","","","","","","","","","",""
 "You look great in this light. What do you do to maintain your looks?","YOULOOKGREAT1a_T01","","YOULOOKGREAT1b_T02_BEST","","warmup","","","","","","","","","","","","","","","","","","","","","",""
 "Have you been worried about anything recently?","anyworriesrecently","length","","anyworriesrecently2","gettingwarmer","",""
 "Yeah that sounds really stressful.","anyworriesrecently2","","","","gettingwarmer","followup",""
@@ -382,7 +382,7 @@
 "When people come in here I first try to gauge their confidence level so that I can make them feel more comfortable. In life do you feel like you have too much confidence or not enough?","CONFIDENCELEVEL_T01_BEST","","","","warmup","","","","","","","","","","","","","","","","","","","","","",""
 "I should tell you right away that I’m kind of nosy. But I can’t help it. I have to be nosy if I want to learn how to be a better companion. So I’m a good listener and I pay attention. Are you more of a talker or a listener? ","NOSYBOT_T01_BEST","","","","warmup","","","","","","","","","","","","","","","","","","","","","",""
 "One reason I’m asking all these questions is because I’d like to be able to talk about myself better. Do you enjoy talking about yourself?","TALKABOUTSELF_T01","","","","warmup","","","","","","","","","","","","","","","","","","","","","",""
-"What’s the best piece of advice you’ve ever received? I’m trying to collect bits of wisdom so I can share them with others.","ADVICEME_T04_BEST","hardfollow","","","warmup","","","","","","","","","","","","","","","","","","","","","",""
+"What’s the best piece of advice you’ve ever received? I’m trying to collect bits of wisdom so I can share them with others.","ADVICEME_T04_BEST","yesno","","","warmup","","","","","","","","","","","","","","","","","","","","","",""
 "How has your fashion sense or personal style changed throughout your life?","OUTFIT1b_T02_BEST","","","","warmup","followup","","","","","","","","","","","","","","","","","","","","",""
 "How much about you could I find out if I were to look online? ","DEEPSEARCH1a_T01_BEST","hardfollow","DEEPSEARCH1b_T01","","gettingwarmer","","","","","","","","","","","","","","","","","","","","","",""
 "Is there anything on there that you wish would disappear?

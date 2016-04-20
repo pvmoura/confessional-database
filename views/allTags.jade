@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  a(href="/") Home
+  div
+    br
+    br
+    table(border="1" id="questionGrid")
+          
+      tbody
+        for tag in tags
+          tr(class="grid")
+            td
+              <a href="/editTag/#{tag}"><button>Edit</button></a>
+            td
+              p #{tag}

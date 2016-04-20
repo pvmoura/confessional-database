@@ -2,10 +2,12 @@ extends layout
 
 block content
   h1= title
-  div
+  div(id="tags")
+    p 
+      a(href="viewTags") Tags
     for tag in tags
       div #{tag}
-  form(name="edit-question", method="post")
+  form(name="edit-question", method="post", id="edit-form")
     div.input
         span.Label Select a question.
         br
@@ -16,11 +18,11 @@ block content
     br
     br
     div.input(class="toHide")
-        input(type="hidden" name="oldText" id="oldText" size="175")
+        input(type="hidden" name="oldText" id="oldText" size="150")
     div.input(class="toHide")
         span.Label Current question text:
         br
-        input(type="text" name="currentText" id="currentText" size="175")
+        input(type="text" name="currentText" id="currentText" size="150")
     div.input(class="toHide")
         span.Label Filename 
         input(type="text" name="filename" id="filename")

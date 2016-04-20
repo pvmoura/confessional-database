@@ -34,3 +34,12 @@ button {
 #searchText {
 	line-height: 20px;
 }
+
+#tags {
+  position:absolute;
+  right:15%;
+}
+
+#edit-form {
+  width: 75%;
+}

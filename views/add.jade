@@ -2,7 +2,11 @@ extends layout
 
 block content
   h1= title
-  form(name="add-question", method="post")
+  div(id="tags")
+    a(href="/viewTags") Tags
+    for tag in tags
+      p #{tag}
+  form(id="edit-form", name="add-question", method="post")
         div.input
             span.label Filename 
             input(type="text", id="af", name="filename") 
