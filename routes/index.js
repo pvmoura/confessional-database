@@ -136,7 +136,7 @@ router.post('/edit', function(req, res, next) {
 	var chosenQuestion = (req.body.oldText);
 	var newText = req.body.currentText.replace(/,/g, "");
 	var filename = req.body.filename;
-	var futype = req.body.followuptype;
+	var futype = req.body.futype;
 	var fufile1 = req.body.fufile1;
 	var fufile2 = req.body.fufile2;
 	var tag1 = req.body.tag1;
@@ -215,7 +215,7 @@ router.get('/add', function(req, res, next) {
 router.post('/add', function(req, res, next) {
 	var questionText = req.body.questionText.replace(/,/g, "");
 	var filename = req.body.filename;
-	var futype = req.body.followuptype;
+	var futype = req.body.futype;
 	var fufile1 = req.body.fufile1;
 	var fufile2 = req.body.fufile2;
 	var tag1 = req.body.tag1;
